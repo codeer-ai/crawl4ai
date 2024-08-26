@@ -19,9 +19,32 @@ with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 # Define the requirements for different environments
-default_requirements = [req for req in requirements if not req.startswith(("torch", "transformers", "onnxruntime", "nltk", "spacy", "tokenizers", "scikit-learn", "numpy"))]
-torch_requirements = [req for req in requirements if req.startswith(("torch", "nltk", "spacy", "scikit-learn", "numpy"))]
-transformer_requirements = [req for req in requirements if req.startswith(("transformers", "tokenizers", "onnxruntime"))]
+default_requirements = [
+    req
+    for req in requirements
+    if not req.startswith(
+        (
+            "torch",
+            "transformers",
+            "onnxruntime",
+            "nltk",
+            "spacy",
+            "tokenizers",
+            "scikit-learn",
+            "numpy",
+        )
+    )
+]
+torch_requirements = [
+    req
+    for req in requirements
+    if req.startswith(("torch", "nltk", "spacy", "scikit-learn", "numpy"))
+]
+transformer_requirements = [
+    req
+    for req in requirements
+    if req.startswith(("transformers", "tokenizers", "onnxruntime"))
+]
 
 setup(
     name="Crawl4AI",
@@ -34,15 +57,15 @@ setup(
     author_email="unclecode@kidocode.com",
     license="MIT",
     packages=find_packages(),
-    install_requires=default_requirements,
+    install_requires=default_requirements + ["setuptools>=68.0.0"],
     extras_require={
         "torch": torch_requirements,
         "transformer": transformer_requirements,
         "all": requirements,
     },
     entry_points={
-        'console_scripts': [
-            'crawl4ai-download-models=crawl4ai.model_loader:main',
+        "console_scripts": [
+            "crawl4ai-download-models=crawl4ai.model_loader:main",
         ],
     },
     classifiers=[
@@ -54,6 +77,9 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
     ],
     python_requires=">=3.7",
+    setup_requires=["setuptools>=68.0.0", "wheel"],
 )
